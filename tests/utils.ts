@@ -1,6 +1,9 @@
 
 export class Test {
-    constructor(name, test, expected){
+    name:string
+    test:() => any
+    expected:any
+    constructor(name:string, test:() => any, expected:any){
         this.test = test;
         this.name = name;
         this.expected = expected;
@@ -18,7 +21,8 @@ export class Test {
 }
 
 export class Tests {
-    constructor(tests){
+    tests:Test[]
+    constructor(tests:Test[]){
         this.tests = tests;
     }   
     run(){

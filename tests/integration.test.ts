@@ -1,12 +1,12 @@
-import $, { EZInline } from "../index.js";
-import { Test, Tests } from "./utils.js";
+import $, { EZInline } from "../src";
+import { Test, Tests } from "./utils";
 
 EZInline.Config.setProperties({
     brad: 'border-radius'
 }, {
     isPositional: true
 }).setProperties({
-    light: (color) => `color-light${color}`
+    light: (color:string) => `color-light${color}`
 })
 
 new Tests([
