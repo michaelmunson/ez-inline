@@ -98,7 +98,7 @@ export namespace EZInline {
             })
             return Config;
         }
-
+        
         export function configure(configuration:Partial<Configuration>, options?:ConfigurationOptions){
             options = {...defaultConfigOptions, ...options}
             if (options.merge){
