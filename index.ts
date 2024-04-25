@@ -22,10 +22,19 @@ export namespace EZInline {
     }
 
     export namespace Config {
+        type SetPropertyOptions = {
+            isPositional?: boolean
+        }
+        type ConfigurationOptions = {
+            merge?:boolean
+        }
         type Configuration = {
             properties: Record<string, string | ((value:string) => string)>
             unit:string
             multiple:number
+        }
+        const defaultConfigOptions:ConfigurationOptions = {
+            merge: true
         }
         function toPosAlias(aliasObject: Record<string, string>) {
             let aliases = {};
@@ -68,23 +77,30 @@ export namespace EZInline {
             return config.properties[property];
         }
 
-        export function setProperty(name:string, value:string, isPositional:boolean = false){
-            const prop = isPositional ? (
-                {...toPosAlias({[name]: value})}
-            ) : (
-                {[name] : value}
-            )
-            config.properties = {...config.properties, ...prop}
+        export function setProperty(name:string, value:Configuration['properties'][string], options?:SetPropertyOptions){
+            if (typeof value === "string"){
+                const prop = options?.isPositional ? (
+                    {...toPosAlias({[name]: value})}
+                ) : (
+                    {[name] : value}
+                );
+                config.properties = {...config.properties, ...prop}
+            } else {
+                const prop = {[name] : value}
+                config.properties = {...config.properties, ...prop}
+            }
+
         }
 
-        export function setProperties(properties:Record<string,string>, isPositional:boolean = false){
+        export function setProperties(properties:Configuration['properties'], options?:SetPropertyOptions){
             Object.entries(properties).forEach(([alias,value]) => {
-                setProperty(alias, value, isPositional)
+                setProperty(alias, value, options)
             })
         }
 
-        export function configure(configuration:Partial<Configuration>, merge:boolean = true){
-            if (merge){
+        export function configure(configuration:Partial<Configuration>, options?:ConfigurationOptions){
+            options = {...defaultConfigOptions, ...options}
+            if (options.merge){
                 const props = {...config.properties, ...configuration.properties};
                 Object.assign(config, {...configuration, ...props})
             } else {
