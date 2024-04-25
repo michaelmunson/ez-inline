@@ -37,4 +37,7 @@ export default function MyComponent() {
 $`text-transform-uppercase` // {textTransform:'uppercase'}
 
 $`white-space-nowrap` // {whiteSpace: 'nowrap'}
+
+/* if a "-" is present in the value, use () */
+$`align-items(space-between)`
 ```
