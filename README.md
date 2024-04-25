@@ -1,6 +1,8 @@
 # ez-inline
 An easy way to add inline styling to your react apps
 
+**This is for use in the browser and *requires* `CSS.supports` to function properly**
+
 ## Installation
 ```bash
 npm install ez-inline

@@ -89,13 +89,14 @@ export namespace EZInline {
                 const prop = {[name] : value}
                 config.properties = {...config.properties, ...prop}
             }
-
+            return Config;
         }
 
         export function setProperties(properties:Configuration['properties'], options?:SetPropertyOptions){
             Object.entries(properties).forEach(([alias,value]) => {
                 setProperty(alias, value, options)
             })
+            return Config;
         }
 
         export function configure(configuration:Partial<Configuration>, options?:ConfigurationOptions){
