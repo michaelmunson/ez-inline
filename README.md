@@ -32,3 +32,9 @@ export default function MyComponent() {
     )
 }
 ```
+### Other usage
+```typescript
+$`text-transform-uppercase` // {textTransform:'uppercase'}
+
+$`white-space-nowrap` // {whiteSpace: 'nowrap'}
+```
