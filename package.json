@@ -1,0 +1,26 @@
+{
+  "name": "ez-inline",
+  "version": "1.0.0",
+  "description": "Easy CSS inline styler",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelmunson/ez-inline.git"
+  },
+  "keywords": [
+    "css",
+    "react"
+  ],
+  "author": "Michael Schilling Munson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michaelmunson/ez-inline/issues"
+  },
+  "homepage": "https://github.com/michaelmunson/ez-inline#readme",
+  "dependencies": {
+    "csstype": "^3.1.3"
+  }
+}
