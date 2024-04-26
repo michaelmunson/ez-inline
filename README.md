@@ -11,8 +11,7 @@ npm install ez-inline
 ## Usage
 *index.tsx*
 ```typescript 
-import $, { EZInline } from "..";
-import { Test, Tests } from "./utils";
+import { EZInline } from "..";
 
 EZInline.Config.setProperties({
     brad: 'border-radius',
