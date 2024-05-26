@@ -8,6 +8,7 @@ export declare namespace EZInline {
             merge?: boolean;
         };
         type Configuration = {
+            variables: Record<string, string>;
             properties: Record<string, string | ((value: string) => string)>;
             unit: string;
             multiple: number;
@@ -17,6 +18,8 @@ export declare namespace EZInline {
         export function getProperty(property: string): string | ((value: string) => string);
         export function setProperty(name: string, value: Configuration['properties'][string], options?: SetPropertyOptions): typeof Config;
         export function setProperties(properties: Configuration['properties'], options?: SetPropertyOptions): typeof Config;
+        export function setVariable(variable: string, value: string): typeof Config;
+        export function setVariables(variables: Record<string, string>): typeof Config;
         export function configure(configuration: Partial<Configuration>, options?: ConfigurationOptions): void;
         export {};
     }

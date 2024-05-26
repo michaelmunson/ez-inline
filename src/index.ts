@@ -29,6 +29,7 @@ export namespace EZInline {
             merge?:boolean
         }
         type Configuration = {
+            variables:Record<string,string>
             properties: Record<string, string | ((value:string) => string)>
             unit:string
             multiple:number
@@ -56,10 +57,8 @@ export namespace EZInline {
             return aliases;
         };
         export const config = {
+            "variables" : {},
             "properties": {
-                "col": "display-flex flex-direction-column",
-                "row": "display-flex flex-direction-row",
-                "grow": "flex-grow",
                 ...toPosAlias({
                     m: "margin",
                     p: "padding",
@@ -99,6 +98,16 @@ export namespace EZInline {
             return Config;
         }
         
+        export function setVariable(variable:string, value:string){
+            config.variables[variable] = value;
+            return Config;
+        }
+
+        export function setVariables(variables:Record<string,string>){
+            Object.entries(variables).forEach(([variable, value]) => setVariable(variable, value));
+            return Config;
+        }
+
         export function configure(configuration:Partial<Configuration>, options?:ConfigurationOptions){
             options = {...defaultConfigOptions, ...options}
             if (options.merge){
@@ -231,7 +240,14 @@ export namespace EZInline {
                 styleStrings.push(currentString)
                 return styleStrings.filter(x => !!x);
             }
+            private static replaceVariables(rawString:string) {
+                const regex = /\$(\w+)/g; // Regular expression to match $variable
+                return rawString.replace(regex, (match, variable) => {
+                    return Config.config.variables[variable] || match; // Replace with the value from the object or keep the original string if the variable is not found
+                });
+            }
             static fromString(styles:string){
+                styles = Styles.replaceVariables(styles);
                 const styleArray:Style[] = [];
                 const extracted = Styles.extractRaw(styles);
                 for (const style of extracted){
@@ -259,7 +275,6 @@ export namespace EZInline {
                 }
                 return new Styles(...styleArray);
             }
-
         }
     }
 

@@ -45,7 +45,8 @@ var EZInline;
         }
         ;
         Config.config = {
-            "properties": Object.assign({ "col": "display-flex flex-direction-column", "row": "display-flex flex-direction-row", "grow": "flex-grow" }, toPosAlias({
+            "variables": {},
+            "properties": Object.assign({}, toPosAlias({
                 m: "margin",
                 p: "padding",
             })),
@@ -79,6 +80,16 @@ var EZInline;
             return Config;
         }
         Config.setProperties = setProperties;
+        function setVariable(variable, value) {
+            Config.config.variables[variable] = value;
+            return Config;
+        }
+        Config.setVariable = setVariable;
+        function setVariables(variables) {
+            Object.entries(variables).forEach(([variable, value]) => setVariable(variable, value));
+            return Config;
+        }
+        Config.setVariables = setVariables;
         function configure(configuration, options) {
             options = Object.assign(Object.assign({}, defaultConfigOptions), options);
             if (options.merge) {
@@ -216,7 +227,14 @@ var EZInline;
                 styleStrings.push(currentString);
                 return styleStrings.filter(x => !!x);
             }
+            static replaceVariables(rawString) {
+                const regex = /\$(\w+)/g; // Regular expression to match $variable
+                return rawString.replace(regex, (match, variable) => {
+                    return Config.config.variables[variable] || match; // Replace with the value from the object or keep the original string if the variable is not found
+                });
+            }
             static fromString(styles) {
+                styles = Styles.replaceVariables(styles);
                 const styleArray = [];
                 const extracted = Styles.extractRaw(styles);
                 for (const style of extracted) {
